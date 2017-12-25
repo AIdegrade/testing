@@ -32,6 +32,15 @@ class GroupHelper:
         self.return_to_group_page()
         self.group_cashe = None
 
+    def delete_group_by_id(self, id):
+        wd = self.app.wd
+        self.open_group_page()
+        self.select_group_by_id(id)
+        #delete first group
+        wd.find_element_by_name("delete").click()
+        self.return_to_group_page()
+        self.group_cashe = None
+
     def select_first_group(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
@@ -40,6 +49,10 @@ class GroupHelper:
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
+    def select_group_by_id(self,id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
     def edit_first_group(self, group):
         self.edit_group_by_index(0, group)
 
@@ -47,6 +60,19 @@ class GroupHelper:
         wd = self.app.wd
         self.open_group_page()
         self.select_group_by_index(index)
+        #edit first group
+        wd.find_element_by_name("edit").click()
+        #edit
+        self.fill_field_value(group)
+        #select update
+        wd.find_element_by_name("update").click()
+        self.return_to_group_page()
+        self.group_cashe = None
+
+    def edit_group_by_id(self, id, group):
+        wd = self.app.wd
+        self.open_group_page()
+        self.select_group_by_id(id)
         #edit first group
         wd.find_element_by_name("edit").click()
         #edit
